@@ -30,11 +30,11 @@ io.sockets.on('connection', function(socket) {
         console.log("Отключились");
     });
 
-    // // Функция получающая сообщение от какого-либо пользователя
-    // socket.on('send mess', function(data) {
-    //     // Внутри функции мы передаем событие 'add mess',
-    //     // которое будет вызвано у всех пользователей и у них добавиться новое сообщение
-    //     io.sockets.emit('add mess', {mess: data.mess, name: data.name, className: data.className});
-    // });
+    // Функция получающая сообщение от какого-либо пользователя
+    socket.on('send mess', function(data) {
+        // Внутри функции мы передаем событие 'add mess',
+        // которое будет вызвано у всех пользователей и у них добавиться новое сообщение
+        io.sockets.emit('add mess', {mess: data.mess, name: data.name});
+    });
 
 });
