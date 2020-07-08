@@ -61,6 +61,39 @@
 
 <script>
 
+    // У каждого пользователя будет случайный стиль для блока с сообщенями,
+    // поэтому в этом кусочке кода мы получаем случайные числа
+    var min = 1;
+    var max = 6;
+    var random = Math.floor(Math.random() * (max - min)) + min;
+
+    console.log(random)
+
+    // Устаналиваем класс в переменную в зависимости от случайного числа
+    // Эти классы взяты из Bootstrap стилей
+    var alertClass;
+    switch (random) {
+        case 1:
+            alertClass = 'secondary';
+            break;
+        case 2:
+            alertClass = 'danger';
+            break;
+        case 3:
+            alertClass = 'success';
+            break;
+        case 4:
+            alertClass = 'warning';
+            break;
+        case 5:
+            alertClass = 'info';
+            break;
+        case 6:
+            alertClass = 'light';
+            break;
+    }
+
+    console.log(alertClass)
 
     // Функция для работы с данными на сайте
     $(function() {
@@ -79,7 +112,7 @@
             event.preventDefault();
             // В сокет отсылаем новое событие 'send mess',
             // в событие передаем различные параметры и данные
-            socket.emit('send mess', {mess: $textarea.val(), name: $name.val()});
+            socket.emit('send mess', {mess: $textarea.val(), name: $name.val(), className: alertClass});
             // Очищаем поле с сообщением
             $textarea.val('');
         });
@@ -89,7 +122,7 @@
         socket.on('add mess', function(data) {
             // Встраиваем полученное сообщение в блок с сообщениями
             // У блока с сообщением будет тот класс, который соответвует пользователю что его отправил
-            $all_messages.append("<div class='alert'><b>" + data.name + "</b>: " + data.mess + "</div>");
+            $all_messages.append("<div class='alert alert-" + data.className + "'><b>" + data.name + "</b>: " + data.mess + "</div>");
         });
 
     });
